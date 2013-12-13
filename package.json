@@ -1,7 +1,4 @@
 {
- "dependencies" : {
-    "node-inspector"   :  "*"
- },
  "engines": {
     "node": ">=0.10.21"
   }
