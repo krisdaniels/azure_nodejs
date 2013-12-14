@@ -3,7 +3,7 @@
   "express": "3.4.7",
   "jade": "*",
   "stylus": "*",
-  "coffee-script": "*"
+  "coffee-script": "1.6.3"
  },
 
  "engines": {
