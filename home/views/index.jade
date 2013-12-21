@@ -1,23 +1,6 @@
 extends layout
 
+block link
+  -var selected = 'Home'
+      
 block content
-  nav(role='navigation').navbar.navbar-default.navbar-static-top
-    div.navbar-header
-      button(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1').navbar-toggle
-        span.sr-only Toggle navigation
-        span.icon-bar
-        span.icon-bar
-        span.icon-bar
-
-    div.collapse.navbar-collapse#bs-example-navbar-collapse-1
-      ul.nav.navbar-nav
-        li.active 
-          a(href='#') Link
-        li 
-          a(href='#') Link
-        li.dropdown 
-          a(href='#', data-toggle='dropdown').dropdown-toggle Dropdown 
-            b.caret
-          ul.dropdown-menu
-            li
-              a(href='#') Action
