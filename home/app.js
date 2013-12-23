@@ -8,6 +8,7 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
+var mqtt = require('mqtt');
 
 var app = express();
 
@@ -38,38 +39,52 @@ var server = http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
 
-
+var mqttConnected =false;
+var mqttConnecting = false;
+var client={};
 
 var io = require('socket.io').listen(server);
-var sock = {};
+
 io.sockets.on('connection', function (socket) {
 	sock = socket;
+	
+	if(!mqttConnected && !mqttConnecting)
+	{
+		mqttConnecting=true;
+		connectmqtt();
+		mqttConnecting=false;
+	}
+	
+	socket.on('disconnect', function(socket){
+	if(mqttConnected &&  io.sockets.clients().length == 1)
+	{
+		mqttConnected = false;
+		client.end();
+	}
+	});
+	
   socket.emit('news', { hello: 'world' });
   socket.on('my other event', function (data) {
-    console.log(data);
   });
 });
 
 
-var mqtt = require('mqtt')
+function connectmqtt()
+{
+
 var mqttUser = process.env.mqtt_user;
 var mqttPassword = process.env.mqtt_password;
 var mqttHost = process.env.mqtt_host;
 var mqttPort = process.env.mqtt_port;
 
-console.log(mqttPort);
-console.log(mqttHost);
-console.log(mqttUser);
-console.log(mqttPassword);
-
-var client = mqtt.createClient(mqttPort, mqttHost, {username: mqttUser, password: mqttPassword});
-
+client = mqtt.createClient(mqttPort, mqttHost, {username: mqttUser, password: mqttPassword});
+mqttConnected=true;
 client.subscribe('/sensors/#');
 
 client.on('message', function (topic, message) {
-  console.log(message);
-  try{sock.emit('update', message);} catch(e){}
+  try{io.sockets.emit('update', message);} catch(e){}
 });	
 
+}
 
 
