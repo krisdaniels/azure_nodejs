@@ -8,12 +8,6 @@ html
     link(rel='stylesheet', href='http://cdn.oesmith.co.uk/morris-0.4.3.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     
-    script(src='http://code.jquery.com/jquery-1.10.2.min.js')
-    script(src='//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js')
-    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js')
-    script(src='//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js')
-    script(src='http://cdn.oesmith.co.uk/morris-0.4.3.min.js')
-    
     block head
   body
     block link
@@ -32,6 +26,8 @@ html
     
       div.collapse.navbar-collapse#bs-example-navbar-collapse-1
         ul.nav.navbar-nav
+          li.brand 
+            a(href='/') Home monitor
           each val, key in menu
             if selected === key
               li.active 
@@ -40,10 +36,10 @@ html
               li
                 a(href=val,title=key)= key
 
-          //li.dropdown 
-          //  a(href='#', data-toggle='dropdown').dropdown-toggle Sensors 
-          //    b.caret
-          //  ul.dropdown-menu
+          //-li.dropdown 
+          //-  a(href='#', data-toggle='dropdown').dropdown-toggle Sensors 
+          //-    b.caret
+          //-  ul.dropdown-menu
           each val, key in sensors
             if selected === key
               li.active 
@@ -53,3 +49,12 @@ html
                 a(href='/sensors'+val,title=key)= key
               
     block content
+    
+    script(src='http://code.jquery.com/jquery-1.10.2.min.js')
+    script(src='//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js')
+    script(src='//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js')
+    script(src='http://cdn.oesmith.co.uk/morris-0.4.3.min.js')
+    script(src='/socket.io/socket.io.js')
+
+    block scripts

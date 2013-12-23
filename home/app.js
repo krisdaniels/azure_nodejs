@@ -34,6 +34,42 @@ app.get('/users', user.list);
 app.get('/actions', routes.actions);
 app.get('/sensors/:sensorName', routes.sensors);
 
-http.createServer(app).listen(app.get('port'), function(){
+var server = http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
+
+
+
+var io = require('socket.io').listen(server);
+var sock = {};
+io.sockets.on('connection', function (socket) {
+	sock = socket;
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
+});
+
+
+var mqtt = require('mqtt')
+var mqttUser = process.env.mqtt_user;
+var mqttPassword = process.env.mqtt_password;
+var mqttHost = process.env.mqtt_host;
+var mqttPort = process.env.mqtt_port;
+
+console.log(mqttPort);
+console.log(mqttHost);
+console.log(mqttUser);
+console.log(mqttPassword);
+
+var client = mqtt.createClient(mqttPort, mqttHost, {username: mqttUser, password: mqttPassword});
+
+client.subscribe('/sensors/#');
+
+client.on('message', function (topic, message) {
+  console.log(message);
+  try{sock.emit('update', message);} catch(e){}
+});	
+
+
+

@@ -3,7 +3,9 @@
   "express": "3.4.7",
   "jade": "*",
   "stylus": "*",
-  "coffee-script": "1.6.3"
+  "coffee-script": "1.6.3",
+  "mqtt":"*",
+  "socket.io":"*"
  },
 
  "engines": {

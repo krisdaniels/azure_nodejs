@@ -3,18 +3,19 @@
  * GET home page.
  */
 
-var bla = process.env.api_username;
+
+var title = 'House monitor';
 
 exports.index = function(req, res){
-  res.render('index', { title: 'Express', username: bla });
+  res.render('index', { title: title });
 };
 
 exports.actions = function(req, res){
-  res.render('actions', { });
+  res.render('actions', { title: title });
 };
 
 exports.sensors = function(req, res){
   var sensorName = req.params.sensorName;
   console.log(sensorName);
-  res.render('sensor', { currentSensor: sensorName });
+  res.render('sensor', { title: title, currentSensor: sensorName });
 };
