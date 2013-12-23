@@ -31,6 +31,24 @@ $( document ).ready(function(){
 	  });	
 	socket.on('update', function (data) {
 		console.log(data);
+		var data = JSON.parse(data);
+		if(data.sensorid==22)
+		{
+		$('#living_temp').text(data.value);
+		$('#living_temp').effect("highlight", {}, 3000);
+		}
+		
+		if(data.sensorid==21)
+		{
+		$('#living_light').text(data.value);
+		$('#living_light').effect("highlight", {}, 3000);
+		}
+		
+		if(data.sensorid==23)
+		{
+		$('#living_battery').text(data.value);
+		$('#living_battery').effect("highlight", {}, 3000);
+		}
 		
 	  });	
 });
