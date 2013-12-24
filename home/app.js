@@ -52,6 +52,7 @@ io.sockets.on('connection', function (socket) {
 	{
 		mqttConnecting=true;
 		connectmqtt();
+		client.publish('/web/request',JSON.stringify({request:'getCurrentValues'}));
 		mqttConnecting=false;
 	}
 	
@@ -79,7 +80,7 @@ var mqttPort = process.env.mqtt_port;
 
 client = mqtt.createClient(mqttPort, mqttHost, {username: mqttUser, password: mqttPassword});
 mqttConnected=true;
-client.subscribe('/sensors/#');
+client.subscribe('/web/update');
 
 client.on('message', function (topic, message) {
   try{io.sockets.emit('update', message);} catch(e){}
